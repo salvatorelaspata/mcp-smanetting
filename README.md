@@ -19,7 +19,7 @@ npm install
 From terminal 1
 
 ```bash
-npm start
+npm run build
 ```
 
 From terminal 2
@@ -28,9 +28,6 @@ From terminal 2
 npx @modelcontextprotocol/inspector index.js
 ```
 This will start the inspector and connect to the MPC agent running in terminal 1.
-
-
-
 
 ## Resouces
 
