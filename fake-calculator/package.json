@@ -1,5 +1,5 @@
 {
-  "name": "mpc-smanetting--weather",
+  "name": "mpc-smanetting--fake-calculator",
   "version": "1.0.0",
   "main": "build/index.js",
   "type": "module",
