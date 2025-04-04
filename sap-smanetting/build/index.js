@@ -15,9 +15,9 @@ const server = new McpServer({
     },
 });
 server.tool("get-sap-planned-orders-list", "Get list of planned orders in sap", {
-    provide: z.enum(["sap"]),
+    provide: z.string().describe("The provider to use"),
 }, async ({ provide }) => {
-    if (provide !== "sap") {
+    if (provide.toLocaleLowerCase() !== "sap") {
         return {
             content: [
                 {
@@ -42,12 +42,18 @@ server.tool("get-sap-planned-orders-list", "Get list of planned orders in sap", 
     }
     else {
         // formatta i planned order in testo markdown per restituirli in un formato leggibile
+        // formatta i planned order in testo markdown per restituirli in un formato leggibile
+        // Available values : PlannedOrder, PlannedOrderType, PlannedOrderProfile, Material, MaterialName, ProductionPlant, MRPPlant, MRPArea, ProductionVersion, MaterialProcurementCategory, MaterialProcurementType, StorageLocation, BaseUnit, TotalQuantity, PlndOrderPlannedScrapQty, GoodsReceiptQty, IssuedQuantity, PlndOrderPlannedStartDate, PlndOrderPlannedStartTime, PlndOrderPlannedEndDate, PlndOrderPlannedEndTime, PlannedOrderOpeningDate, LastChangeDateTime, ProductionStartDate, ProductionEndDate, SalesOrder, SalesOrderItem, Customer, WBSElementInternalID, WBSElement, WBSDescription, AccountAssignmentCategory, Reservation, MRPController, ProductionSupervisor, PurchasingGroup, PurchasingOrganization, FixedSupplier, PurchasingDocument, PurchasingDocumentItem, QuotaArrangement, QuotaArrangementItem, SupplierName, PlannedOrderIsFirm, PlannedOrderIsConvertible, PlannedOrderBOMIsFixed, PlannedOrderCapacityIsDsptchd, CapacityRequirement, CapacityRequirementOrigin, BillOfOperationsType, BillOfOperationsGroup, BillOfOperations, LastScheduledDate, ScheduledBasicEndDate, ScheduledBasicEndTime, ScheduledBasicStartDate, ScheduledBasicStartTime, SchedulingType, to_PlannedOrderCapacity, to_PlannedOrderComponent
+        const formatted = plannedOrders.map((plannedOrder) => {
+            return `Planned Order: ${plannedOrder.PlannedOrder}, Material: ${plannedOrder.Material}, Material Name: ${plannedOrder.MaterialName}, Production Plant: ${plannedOrder.ProductionPlant}, MRP Plant: ${plannedOrder.MRPPlant}, MRP Area: ${plannedOrder.MRPArea}, Production Version: ${plannedOrder.ProductionVersion}, Material Procurement Category: ${plannedOrder.MaterialProcurementCategory}, Material Procurement Type: ${plannedOrder.MaterialProcurementType}, Storage Location: ${plannedOrder.StorageLocation}, Base Unit: ${plannedOrder.BaseUnit}, Total Quantity: ${plannedOrder.TotalQuantity}, Planned Order Planned Scrap Qty: ${plannedOrder.PlndOrderPlannedScrapQty}, Goods Receipt Qty: ${plannedOrder.GoodsReceiptQty}, Issued Quantity: ${plannedOrder.IssuedQuantity}, Planned Order Planned Start Date: ${plannedOrder.PlndOrderPlannedStartDate}, Planned Order Planned Start Time: ${plannedOrder.PlndOrderPlannedStartTime}, Planned Order Planned End Date: ${plannedOrder.PlndOrderPlannedEndDate}, Planned Order Planned End Time: ${plannedOrder.PlndOrderPlannedEndTime}`;
+        });
+        const total = plannedOrders.length;
         // Create a table with the planned orders
         return {
             content: [
                 {
                     type: "text",
-                    text: `questo è il formato json dei planned order estratti: ${JSON.stringify(plannedOrders, null, 2)}`,
+                    text: `Total planned orders: ${total}\n\nPlanned Orders:\n\n${formatted.join("\n")}`,
                 },
             ],
         };
