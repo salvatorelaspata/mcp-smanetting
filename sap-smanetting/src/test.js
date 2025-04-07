@@ -26,4 +26,5 @@ async function getPlannedOrders() {
 }
 
 // Esegui la funzione
-getPlannedOrders();
+const plannedOrders = await getPlannedOrders();
+console.log(plannedOrders);

@@ -53,7 +53,7 @@ server.tool(
         return `Planned Order: ${plannedOrder.PlannedOrder}, Material: ${plannedOrder.Material}, Material Name: ${plannedOrder.MaterialName}, Production Plant: ${plannedOrder.ProductionPlant}, MRP Plant: ${plannedOrder.MRPPlant}, MRP Area: ${plannedOrder.MRPArea}, Production Version: ${plannedOrder.ProductionVersion}, Material Procurement Category: ${plannedOrder.MaterialProcurementCategory}, Material Procurement Type: ${plannedOrder.MaterialProcurementType}, Storage Location: ${plannedOrder.StorageLocation}, Base Unit: ${plannedOrder.BaseUnit}, Total Quantity: ${plannedOrder.TotalQuantity}, Planned Order Planned Scrap Qty: ${plannedOrder.PlndOrderPlannedScrapQty}, Goods Receipt Qty: ${plannedOrder.GoodsReceiptQty}, Issued Quantity: ${plannedOrder.IssuedQuantity}, Planned Order Planned Start Date: ${plannedOrder.PlndOrderPlannedStartDate}, Planned Order Planned Start Time: ${plannedOrder.PlndOrderPlannedStartTime}, Planned Order Planned End Date: ${plannedOrder.PlndOrderPlannedEndDate}, Planned Order Planned End Time: ${plannedOrder.PlndOrderPlannedEndTime}`;
       });
 
-      const text = `Total planned orders: ${__count}; Planned Orders: ${formatted.join("; ")}`;
+      const text = `Total planned orders: ${__count}\n\nPlanned Orders:\n\n${formatted.join("\n")}`;
 
       return {
         content: [
