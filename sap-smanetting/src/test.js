@@ -10,7 +10,7 @@ async function getPlannedOrders() {
             url: `${BASE_URL}/A_PlannedOrder`,
             params: {
                 '$inlinecount': 'allpages',
-                '$top': 50
+                '$top': 1
             },
             headers: {
                 'APIKey': API_KEY,
@@ -18,9 +18,7 @@ async function getPlannedOrders() {
                 'Accept': 'application/json'
             }
         });
-
-        console.log(response.data.d.results);
-        return response.data.d.results;
+        return response.data.d;
     } catch (error) {
         console.error('Errore durante la richiesta:', error.message);
         throw error;

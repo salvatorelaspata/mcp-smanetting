@@ -16,8 +16,7 @@ export async function getPlannedOrders() {
                 'Accept': 'application/json'
             }
         });
-        console.log(response.data.d.results);
-        return response.data.d.results;
+        return response.data.d;
     }
     catch (error) {
         console.error('Errore durante la richiesta:', error.message);

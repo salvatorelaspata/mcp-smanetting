@@ -23,7 +23,7 @@ server.tool(
     provide: z.string().describe("The provider to use"),
   },
   async ({ provide }) => {
-    if (provide.toLocaleLowerCase() !== "sap") {
+    if (provide.toLocaleLowerCase() !== "sap" && provide.toLocaleLowerCase() !== "default") {
       return {
         content: [
           {
@@ -34,9 +34,9 @@ server.tool(
       };
     }
     // Get grid point data
-    var plannedOrders = await getPlannedOrders();
+    var { __count, results } = await getPlannedOrders();
     // Check if the data is empty
-    if (plannedOrders.length === 0) {
+    if (results.length === 0) {
       return {
         content: [
           {
@@ -49,16 +49,17 @@ server.tool(
       // formatta i planned order in testo markdown per restituirli in un formato leggibile
       // formatta i planned order in testo markdown per restituirli in un formato leggibile
       // Available values : PlannedOrder, PlannedOrderType, PlannedOrderProfile, Material, MaterialName, ProductionPlant, MRPPlant, MRPArea, ProductionVersion, MaterialProcurementCategory, MaterialProcurementType, StorageLocation, BaseUnit, TotalQuantity, PlndOrderPlannedScrapQty, GoodsReceiptQty, IssuedQuantity, PlndOrderPlannedStartDate, PlndOrderPlannedStartTime, PlndOrderPlannedEndDate, PlndOrderPlannedEndTime, PlannedOrderOpeningDate, LastChangeDateTime, ProductionStartDate, ProductionEndDate, SalesOrder, SalesOrderItem, Customer, WBSElementInternalID, WBSElement, WBSDescription, AccountAssignmentCategory, Reservation, MRPController, ProductionSupervisor, PurchasingGroup, PurchasingOrganization, FixedSupplier, PurchasingDocument, PurchasingDocumentItem, QuotaArrangement, QuotaArrangementItem, SupplierName, PlannedOrderIsFirm, PlannedOrderIsConvertible, PlannedOrderBOMIsFixed, PlannedOrderCapacityIsDsptchd, CapacityRequirement, CapacityRequirementOrigin, BillOfOperationsType, BillOfOperationsGroup, BillOfOperations, LastScheduledDate, ScheduledBasicEndDate, ScheduledBasicEndTime, ScheduledBasicStartDate, ScheduledBasicStartTime, SchedulingType, to_PlannedOrderCapacity, to_PlannedOrderComponent
-      const formatted = plannedOrders.map((plannedOrder) => {
+      const formatted = results.map((plannedOrder) => {
         return `Planned Order: ${plannedOrder.PlannedOrder}, Material: ${plannedOrder.Material}, Material Name: ${plannedOrder.MaterialName}, Production Plant: ${plannedOrder.ProductionPlant}, MRP Plant: ${plannedOrder.MRPPlant}, MRP Area: ${plannedOrder.MRPArea}, Production Version: ${plannedOrder.ProductionVersion}, Material Procurement Category: ${plannedOrder.MaterialProcurementCategory}, Material Procurement Type: ${plannedOrder.MaterialProcurementType}, Storage Location: ${plannedOrder.StorageLocation}, Base Unit: ${plannedOrder.BaseUnit}, Total Quantity: ${plannedOrder.TotalQuantity}, Planned Order Planned Scrap Qty: ${plannedOrder.PlndOrderPlannedScrapQty}, Goods Receipt Qty: ${plannedOrder.GoodsReceiptQty}, Issued Quantity: ${plannedOrder.IssuedQuantity}, Planned Order Planned Start Date: ${plannedOrder.PlndOrderPlannedStartDate}, Planned Order Planned Start Time: ${plannedOrder.PlndOrderPlannedStartTime}, Planned Order Planned End Date: ${plannedOrder.PlndOrderPlannedEndDate}, Planned Order Planned End Time: ${plannedOrder.PlndOrderPlannedEndTime}`;
       });
-      const total = plannedOrders.length;
-      // Create a table with the planned orders
+
+      const text = `Total planned orders: ${__count}; Planned Orders: ${formatted.join("; ")}`;
+
       return {
         content: [
           {
             type: "text",
-            text: `Total planned orders: ${total}\n\nPlanned Orders:\n\n${formatted.join("\n")}`,
+            text: text,
           },
         ],
       };
