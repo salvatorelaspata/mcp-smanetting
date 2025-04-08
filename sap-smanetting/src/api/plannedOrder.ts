@@ -1,9 +1,8 @@
 import axios from 'axios';
 
-const API_KEY = 'pD3ND4a1Gn1XMFYH0LbAOjkF2CDKgjbv';
-const BASE_URL = 'https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_PLANNED_ORDERS';
-
-export async function getPlannedOrders(): Promise<{ __count: string, results: any[] }> {
+export async function getPlannedOrders({ USERNAME,
+    PASSWORD,
+    BASE_URL }: { USERNAME: string; PASSWORD: string; BASE_URL: string; }): Promise<{ __count: string, results: any[] }> {
     try {
         const response = await axios({
             method: 'get',
@@ -13,7 +12,8 @@ export async function getPlannedOrders(): Promise<{ __count: string, results: an
                 '$top': 50
             },
             headers: {
-                'APIKey': API_KEY,
+                // autenticate with user and password in authorization header
+                'Authorization': `Basic ${btoa(`${USERNAME}:${PASSWORD}`)}`,
                 'DataServiceVersion': '2.0',
                 'Accept': 'application/json'
             }

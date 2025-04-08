@@ -5,6 +5,19 @@ import { getPlannedOrders } from "./api/plannedOrder.js";
 // import { apiPlannedOrders, PlannedOrder } from './generated/API_PLANNED_ORDERS';
 // const { plannedOrderApi } = apiPlannedOrders();
 
+import dotenv from "dotenv";
+dotenv.config();
+
+const USERNAME = process.env.USERNAME;
+const PASSWORD = process.env.PASSWORD;
+const BASE_URL = process.env.BASE_URL;
+
+console.log(process.env);
+
+if (!USERNAME || !PASSWORD || !BASE_URL) {
+  console.error(`Missing environment variables USERNAME=${USERNAME}, PASSWORD=${PASSWORD}, BASE_URL=${BASE_URL}`);
+  process.exit(1);
+}
 // Create server instance
 const server = new McpServer({
   name: "sap-planned-orders",
@@ -34,7 +47,7 @@ server.tool(
       };
     }
     // Get grid point data
-    var { __count, results } = await getPlannedOrders();
+    var { __count, results } = await getPlannedOrders({ USERNAME, PASSWORD, BASE_URL });
     // Check if the data is empty
     if (results.length === 0) {
       return {
@@ -70,7 +83,7 @@ server.tool(
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("Weather MCP Server running on stdio");
+  console.error("SAP MCP Server running on stdio");
 }
 
 main().catch((error) => {
