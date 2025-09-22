@@ -1,10 +1,10 @@
 using my.bookshop as my from '../db/schema';
 
 service CatalogService {
-  @readonly
+  // @readonly
   @mcp: {
     name       : 'books',
-    description: 'Book catalog with search and filtering',
+    description: 'Book catalog with search and filteringaaaaaaaaa',
     resource   : [
       'filter',
       'orderby',
