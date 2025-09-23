@@ -4,6 +4,9 @@
   "description": "A simple CAP project.",
   "dependencies": {
     "@gavdi/cap-mcp": "^1.0.1",
+    "@sap-cloud-sdk/connectivity": "^4.1.2",
+    "@sap-cloud-sdk/http-client": "^4.1.2",
+    "@sap-cloud-sdk/resilience": "^4.1.2",
     "@sap/cds": "^9",
     "@sap/xsenv": "^6.0.0",
     "@sap/xssec": "^4.9.2",
@@ -18,7 +21,7 @@
   "private": true,
   "cds": {
     "mcp": {
-      "name": "my-bookshop-mcp",
+      "name": "my-bupa-mcp",
       "auth": "none",
       "wrap_entities_to_actions": true,
       "wrap_entity_modes": [
@@ -29,6 +32,17 @@
       "instructions": "MCP server instructions for agents"
     },
     "requires": {
+      "API_BUSINESS_PARTNER": {
+        "kind": "odata-v2",
+        "model": "srv/external/API_BUSINESS_PARTNER",
+        "credentials": {
+          "url": "https://sandbox.api.sap.com/s4hanacloud",
+          "path": "/sap/opu/odata/sap/API_BUSINESS_PARTNER",
+          "headers": {
+                      "APIKey": "fG6x6QfG0JqDhq7ImXfyYmTbWlEyeyMa"
+                    }
+        }
+      },
       "auth": {
         "kind": "dummy"
       }
